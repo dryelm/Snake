@@ -1,0 +1,33 @@
+class QueueElement{
+    field int X, Y;
+    field QueueElement Next;
+
+    constructor QueueElement new(int inputX, int inputY, QueueElement inputNext){
+        let X = inputX;
+        let Y = inputY;
+        let Next = inputNext;
+        return this;
+    }
+
+    method void setNext(QueueElement inputNext){
+        let Next = inputNext;
+        return;
+    }
+
+    method int getX(){
+        return X;
+    }
+
+    method int getY(){
+        return Y;
+    }
+
+    method QueueElement getNext(){
+        return Next;
+    }
+
+    method void clearNext(){
+        let Next = null;
+        return;
+    }
+} 

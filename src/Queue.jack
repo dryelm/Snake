@@ -1,0 +1,43 @@
+class Queue{
+    field QueueElement Head;
+
+    constructor Queue new(){
+    return this;
+    }
+
+    method void EnqueueElement(QueueElement element){
+        do element.setNext(Head);
+        let Head = element;
+        return;
+    }
+
+    method void EnqueueValues(int inputX, int inputY){
+        var QueueElement newElement;
+        let newElement = QueueElement.new(inputX, inputY, Head);
+        let Head = newElement;
+        return;
+    }
+
+    method QueueElement getHead(){
+        return Head;
+    }
+
+    method void Dequeue(){
+        var QueueElement currentElement;
+        var QueueElement nextElement;
+        let currentElement = Head;
+        let nextElement = Head.getNext();
+        if (nextElement = null){
+            return;
+        }
+
+        while(~(nextElement.getNext() = null)){
+            let nextElement = nextElement.getNext();
+            let currentElement = currentElement.getNext();
+        }
+
+        do currentElement.setNext(null);
+
+        return;
+    }
+}

@@ -1,0 +1,31 @@
+class Random {
+    static int a;
+    static int c;
+    static int m;
+    field int x;
+
+    constructor Random new() {
+        if (x = 0) {
+            let x = 57;
+        }
+        let a = 23;
+        let c = 106;
+        let m = 1283;
+        return this;
+    }
+
+    method int rand() {
+        var int y;
+
+        let y = a * x + c;
+        let x = y - ((y / m) * m);
+        return x;
+    }
+
+    method int randRange(int l, int h) {
+        var int b;
+
+       let b = (m / (h - l + 1));
+       return (rand() / b) + l;
+    }
+}

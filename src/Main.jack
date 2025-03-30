@@ -1,0 +1,54 @@
+class Main {
+	function void main() {
+    var Queue testQueue;
+
+    var int key;
+    var Board board;
+    var QueueElement e;
+
+    let testQueue = Queue.new();
+    let board = Board.new();
+
+    do Output.printString("Welcome to Snake game!");
+    do Output.println();
+    do Output.printString("To start the game press space");
+
+    while (true) {
+        while (true) {
+            do Sys.wait(150);
+            //while (Memory.peek(24576) = 0) {}
+            
+            let key = Memory.peek(24576);
+            
+            // left
+            if (key = 130) {
+                do board.Left();
+            }
+            // up
+            if (key = 131) {
+                do board.Up();
+            }
+            // right
+            if (key = 132) {
+                do board.Right();
+            }
+            // down
+            if (key = 133) {
+                do board.Down();
+            }
+
+            // space
+            if (key = 32) {
+                do board.Start();
+            }
+
+            //do Output.printInt(key);
+
+            do board.MakeIteration();
+
+            do board.Draw();
+        }
+    }
+    return;
+	}
+}

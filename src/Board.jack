@@ -1,0 +1,167 @@
+class Board {
+    field int currentDirection;
+    field Queue snake;
+    field int CherryX;
+    field int CherryY;
+    field Random random;
+    field boolean isStarted;
+    field boolean tookCherry;
+
+    constructor Board new(){
+    let random = Random.new();
+        let currentDirection = 1;
+        let snake = Queue.new();
+        let isStarted = false;
+        let tookCherry = true;
+        do snake.EnqueueValues(0, 0);
+        do snake.EnqueueValues(0, 1);
+    
+        return this;
+    }
+
+    method void Start(){
+        let isStarted = true;
+        return;
+    }
+
+    method void Left(){
+    let currentDirection = 3;
+        return;
+    }
+
+    method void Right(){
+    let currentDirection = 1;
+        return;    
+    }
+
+    method void Up(){
+    let currentDirection = 0;
+        return;   
+    }
+
+    method void Down(){
+    let currentDirection = 2;
+        return;   
+    }
+
+    method void MakeIteration(){
+        var QueueElement newElement;
+        var int newValue;
+        var QueueElement head;
+
+        if(~(isStarted)){
+            return;
+        }
+
+        do RenewCherryIfNeeded();
+        let tookCherry = false;
+        
+        let head = snake.getHead();
+        if (currentDirection = 0){
+            let newElement = QueueElement.new(head.getX(), head.getY() - 1, head);
+        }
+
+        if (currentDirection = 1){
+            let newElement = QueueElement.new(head.getX() + 1 , head.getY() , head);
+        }
+
+        if (currentDirection = 2){
+            let newElement = QueueElement.new(head.getX(), head.getY() + 1, head);
+        }
+
+        if (currentDirection = 3){
+            let newElement = QueueElement.new(head.getX() - 1, head.getY(), head);
+        }
+
+        if(IsIntersect(CherryX, CherryY)){
+            let tookCherry = true;
+        }
+
+        if(~(tookCherry)){
+            do snake.Dequeue();
+        }
+        
+        do EnsureAllowed(newElement);
+        do snake.EnqueueElement(newElement);
+
+        
+        return;
+    }
+
+    method void Draw(){
+        var QueueElement currentElement;
+
+        if(~(isStarted)){
+            return;
+        }
+
+        do Screen.clearScreen();
+        do Screen.drawRectangle(0, 0, 404, 2);
+        do Screen.drawRectangle(0, 0, 2, 254);
+        do Screen.drawRectangle(0, 252, 404, 254);
+        do Screen.drawRectangle(402, 0, 404, 254);
+
+        let currentElement = snake.getHead();
+        while (~(currentElement = null)){
+            do DrawCell(currentElement.getX(), currentElement.getY());
+            let currentElement = currentElement.getNext();
+        }
+
+        do DrawCell(CherryX, CherryY);
+        return;
+    }
+
+    method void DrawCell(int x, int y){
+        do Screen.drawRectangle(3 + (10 * x), 3 + (10 * y), 11 + (10 * x), 11 + (10 * y));
+        return;
+    }
+
+    method void RenewCherryIfNeeded(){
+        var boolean needRetry;
+
+        if(~(tookCherry)){
+            return;
+        }
+
+        let needRetry = true;
+        while(needRetry){
+            let CherryX = random.randRange(0, 39);
+            let CherryY = random.randRange(0, 24);
+            if(~(IsIntersect(CherryX, CherryY))){
+                let needRetry = false;
+            }
+        }
+        return;
+    }
+
+    method void EnsureAllowed(QueueElement newElement){
+        if(IsIntersect(newElement.getX(), newElement.getY())){
+            let isStarted = false;
+            do Screen.clearScreen();
+            do Output.printString("Game over");
+            do Output.println();
+            do Output.printString("Thanks for playing!");
+            do Output.println();
+            do Output.printString("Hope, you've enjoyed)");
+        }
+        return;
+    }
+
+    method boolean IsIntersect(int x, int y){
+        var QueueElement currentElement;
+
+        let currentElement = snake.getHead();
+
+        if((x < 0) | (x > 39) | (y < 0) | (y > 24)){
+            return true;
+        }
+
+        while(~(currentElement.getNext() = null)){
+            if (currentElement.getX() = x & currentElement.getY() = y){
+                return true;
+            }
+            let currentElement = currentElement.getNext();
+        }
+        return false;
+    }
+}
